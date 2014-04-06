@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 """
-Created on Wed Apr  2 12:49:03 2014
 
 @author: Arpit Tandon
 @Contributer:  Raul Mendez-Giraldez
