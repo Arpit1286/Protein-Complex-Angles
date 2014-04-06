@@ -1,7 +1,6 @@
 """
-
-@author: Arpit Tandon
-@Contributer:  Raul Mendez-Giraldez
+Author: Arpit Tandon
+Contributer:  Raul Mendez-Giraldez
 Calculate the angle between the planes of the principal axes vector
 """
 import __main__
@@ -97,7 +96,7 @@ for i in pdb_name:
 # axis3 is the principal axis with the smallest eigen value (eval3)
 #--------------------------------------------------------------------------
     for i in xrange(len(e_values)):
-	# find biggest eigen value : Arpit: This is the axis I need 
+	# find biggest eigen value : This is the axis we need
          if e_values[i] == max(e_values):
              eval1 = e_values[i]
              axis1 = e_vectors[:,i]
@@ -111,9 +110,10 @@ for i in pdb_name:
             eval2 = e_values[i]
             axis2 = e_vectors[:,i]
 
-# central vector in both directions, take care of directions
+
+# Vector between the origin, take care of directions
 c_vector1 = center_list[0] - center_list[1] #betwenn p1_axis1 and center
-c_vector2 = center_list[1] - center_list[0] #between p2_axis1 and center
+c_vector2 = center_list[1] - center_list[0] #between p2_axis1 and center, points in reverse direction
 
 d1 = numpy.cross(axis1_list[0],c_vector1) 
 d2 = numpy.cross(axis1_list[1],c_vector2)
@@ -123,11 +123,22 @@ d2 = numpy.cross(axis1_list[1],c_vector2)
 def unit_vector(vector):
     unit_vector = vector / numpy.linalg.norm(vector)
     return unit_vector
+    
+# convert radian to degrees    
+def angle_deg(angle_rad):
+    angle_deg = numpy.degrees(angle_rad)
+    return angle_deg
 
 # calculate the angle
 vector_1 = unit_vector(d1)
 vector_2 = unit_vector(d2)
+vector_d1 = unit_vector(axis1_list[0])
+vector_d2 = unit_vector(axis1_list[1])
 
-angle_rad = numpy.arccos(numpy.dot(vector_1,vector_2))
-angle_deg = numpy.degrees(angle_rad)
-print "the angle between principal axis of two actins is %8.3f" % (angle_deg)
+angle_axis1 = numpy.arccos(numpy.dot(vector_d1,vector_d2))
+angle_planes = numpy.arccos(numpy.dot(vector_1,vector_2))
+angle_planes_deg = angle_deg(angle_planes)
+angle_axis1_deg = angle_deg(angle_axis1)
+
+print "the angle between the two planes is %8.3f" % (180-angle_planes_deg)
+print "the angle between the principal vectors of two actins is %8.3f" % (angle_axis1_deg)
